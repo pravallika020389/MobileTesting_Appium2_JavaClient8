@@ -182,7 +182,7 @@ public class TestScripts extends BaseTest {
 	}
 	
 	@Test
-	public void validate_Solondriod_doubleTap_withGestures09() throws InterruptedException, MalformedURLException {
+	public void validate_Solondriod_doubleTap_withGestures_10() throws InterruptedException, MalformedURLException {
 		
 		driver = startAppSolondriod();
 		solodroidPage = new SolodroidPage(driver);
@@ -197,7 +197,7 @@ public class TestScripts extends BaseTest {
 	}
 	
 	@Test
-	public void validate_Solondriod_zoom_FingureGesture_10() throws InterruptedException, MalformedURLException {
+	public void validate_Solondriod_zoom_FingureGesture_11() throws InterruptedException, MalformedURLException {
 		
 		driver = startAppSolondriod();
 		solodroidPage = new SolodroidPage(driver);
