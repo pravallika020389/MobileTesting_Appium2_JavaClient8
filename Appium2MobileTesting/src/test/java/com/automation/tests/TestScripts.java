@@ -1,5 +1,6 @@
 package com.automation.tests;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Properties;
 
@@ -7,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -21,8 +23,8 @@ import com.automation.pages.SwitchAppPage;
 import com.automation.pages.WebViewPage;
 import com.automation.utilities.PropertiesUtility;
 
-
 import io.appium.java_client.AppiumDriver;
+
 
 public class TestScripts extends BaseTest {
 	static AppiumDriver driver;
@@ -40,15 +42,21 @@ public class TestScripts extends BaseTest {
 	
 	
 	@BeforeTest
-	public void setUp() throws MalformedURLException {
+	public void setUp() throws MalformedURLException{
+		startAppium();
 		driver = startApp();
 		loginPage = new LoginPage(driver);
 		pro = new PropertiesUtility();
 		appProp = pro.loadFile("applicationDataProperties");
 	}
 	
+	@AfterTest
+	public void closeConnections()
+	{
+		stopAppium();
+	}
 	
-	@Test
+	@Test(enabled = true)
 	public void validateLoginInValidEmail_01() throws InterruptedException {
 			
 		Thread.sleep(10000);
@@ -67,7 +75,7 @@ public class TestScripts extends BaseTest {
 		Assert.assertEquals(actualInValidUserIdMsg, expectedInValidUserIdMsg);
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void validateLoginInValidPassword_02() throws InterruptedException {
 		Thread.sleep(10000);
 		String userId = appProp.getProperty("login.valid.userid");
@@ -85,7 +93,7 @@ public class TestScripts extends BaseTest {
 		Assert.assertEquals(expectedInValidPasswordMsg, actualInValidPasswordMsg);
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void validateLoginSucess_03() throws InterruptedException {
 		Thread.sleep(10000);
 		String userId = appProp.getProperty("login.valid.userid");
@@ -104,7 +112,7 @@ public class TestScripts extends BaseTest {
 		loginPage.clickOkButton();
 	}
 
-	@Test
+	@Test(enabled = true)
 	public void validateForm_04() throws InterruptedException {
 		Thread.sleep(10000);
 		driver.findElement(By.xpath("//android.view.View[@content-desc=\"Forms\"]")).click();
@@ -124,7 +132,7 @@ public class TestScripts extends BaseTest {
 	}
 	
 	
-	@Test
+	@Test(enabled = false)
 	public void validateSwipe_withGestures_05() throws InterruptedException {
 		Thread.sleep(10000);
 		 driver.findElement(By.xpath("//android.view.View[@content-desc=\"Swipe\"]")).click();
@@ -134,7 +142,7 @@ public class TestScripts extends BaseTest {
 		
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void validateScrollUntillElement_withGestures_06() throws InterruptedException {
 		Thread.sleep(10000);
 		driver.findElement(By.xpath("//android.view.View[@content-desc=\"Swipe\"]")).click();
@@ -147,7 +155,7 @@ public class TestScripts extends BaseTest {
 		
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void validateDragAndDrop_withGestures_07() throws InterruptedException {
 		Thread.sleep(10000);
 		   driver.findElement(By.xpath("//android.view.View[@content-desc=\"Drag\"]")).click();
@@ -159,19 +167,25 @@ public class TestScripts extends BaseTest {
 	}
 	
 	
-//	@Test
-//	public void validateWebView_08() throws InterruptedException {
-//		Thread.sleep(10000);
-//		 driver.findElement(By.xpath("//android.view.View[@content-desc=\"Webview\"]")).click();
-//		   Thread.sleep(5000);
-//		   webViewPage = new WebViewPage(driver);
-//		   webViewPage.clickOnbutton();
-//		   Thread.sleep(5000);
-//		   Assert.assertEquals(true, dragDropPage.isDragDropDone());
-//	}
+	@Test(enabled = true)
+	public void validateWebView_08() throws InterruptedException {
+		Thread.sleep(10000);
+		 driver.findElement(By.xpath("//android.view.View[@content-desc=\"Webview\"]")).click();
+		   Thread.sleep(20000);
+		   webViewPage = new WebViewPage(driver);
+		   webViewPage.swipeDown();
+		   Thread.sleep(15000);
+		   webViewPage.clickGithubLink();
+		   Thread.sleep(15000);
+		
+		   webViewPage.switchToGitHubAndGetTittle();
+		   Thread.sleep(10000);
+		  // webViewPage.clickRepos();
+		  // webViewPage.switchToWdio();
+	}
 	
 	
-	@Test
+	@Test(enabled = false)
 	public void validateSwitchApp_withGestures_09() throws InterruptedException {
 		Thread.sleep(10000);
 		driver.findElement(By.xpath("//android.view.View[@content-desc=\"Drag\"]")).click();
@@ -181,7 +195,7 @@ public class TestScripts extends BaseTest {
 		Thread.sleep(10000);  
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void validate_Solondriod_doubleTap_withGestures_10() throws InterruptedException, MalformedURLException {
 		
 		driver = startAppSolondriod();
@@ -196,7 +210,7 @@ public class TestScripts extends BaseTest {
 		solodroidPage.doubletabPic();
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void validate_Solondriod_zoom_FingureGesture_11() throws InterruptedException, MalformedURLException {
 		
 		driver = startAppSolondriod();

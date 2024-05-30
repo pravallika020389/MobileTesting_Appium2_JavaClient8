@@ -67,10 +67,7 @@ public class FingureGesture {
 		.addAction(fingure1.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
 		.addAction(new Pause(fingure1,Duration.ofMillis(200)) )
 		.addAction(fingure1.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-		
-		
-		
-		
+	
 		
 		driver.perform(Collections.singletonList(sequence1));
 	}
@@ -88,10 +85,30 @@ public class FingureGesture {
 		.addAction(fingure1.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
 		.addAction(new Pause(fingure1,Duration.ofSeconds(1)) )
 		.addAction(fingure1.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+	
+		
+		driver.perform(Collections.singletonList(sequence1));
+	}
+	
+	
+	public void scroll(AppiumDriver driver) {
+		Dimension size = driver.manage().window().getSize();
+		int startX= (int)(size.getWidth()/2);
+		int startY=(int)(size.getHeight()/2);
+		int endX = startX;
+		int endY=(int)(size.getHeight()/4);
 		
 		
+		PointerInput fingure1 = new PointerInput(PointerInput.Kind.TOUCH,"fingure1");	
 		
 		
+		Sequence sequence1 = new Sequence(fingure1,1)
+		.addAction(fingure1.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(),startX,startY))
+		.addAction(fingure1.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
+		.addAction(new Pause(fingure1,Duration.ofSeconds(1)) )
+		.addAction(fingure1.createPointerMove(Duration.ofMillis(100), PointerInput.Origin.viewport(),endX,endY))
+		.addAction(fingure1.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+	
 		
 		driver.perform(Collections.singletonList(sequence1));
 	}
